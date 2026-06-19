@@ -40,11 +40,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-   implementation(project(":core"))
-   implementation(project(":home"))
-   implementation(project(":search"))
-   implementation(project(":sections"))
-   implementation(project(":favorite"))
-   implementation(project(":details"))
-   implementation(project(":about"))
 }
