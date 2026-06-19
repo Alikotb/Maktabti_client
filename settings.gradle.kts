@@ -24,4 +24,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "Maktabti_client"
 include(":app")
- 
+include(":core")
+include(":home")
+include(":search")
+include(":sections")
+include(":favorite")
+include(":about")
+include(":details")
