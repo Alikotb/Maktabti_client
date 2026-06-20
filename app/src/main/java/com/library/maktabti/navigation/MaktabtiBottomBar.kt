@@ -1,5 +1,11 @@
 package com.library.maktabti.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -8,36 +14,42 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
+import com.library.core.ui.theme.Tajawal
 
 @Composable
 fun MaktabtiBottomBar(
     currentRoute: String?,
     onTabSelected: (BottomNavItem) -> Unit
 ) {
-    Surface(
+
+
+    Box(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 12.dp)
-            .padding(bottom = 48.dp)
-            .clip(RoundedCornerShape(32.dp)),
-        shadowElevation = 8.dp,
-        color = MaterialTheme.colorScheme.surface
+            .fillMaxWidth()
+            .padding(bottom = 56.dp),
+        contentAlignment = Alignment.Center
     ) {
-        NavigationBar(
-            containerColor = Color.Transparent,
-            tonalElevation = 0.dp,
-            modifier = Modifier.padding(horizontal = 8.dp)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .height(100.dp)
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(24.dp)
+                ),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             BottomNavItem.items.forEach { item ->
                 val isSelected =
@@ -81,11 +93,13 @@ fun MaktabtiBottomBar(
                     },
                     label = {
                         Text(
+                            modifier = Modifier.padding(top = 4.dp),
                             text = item.label,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 fontSize = 12.sp,
-                                fontWeight = if (isSelected) androidx.compose.ui.text.font.FontWeight.Bold else androidx.compose.ui.text.font.FontWeight.Normal
-                            )
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                fontFamily = Tajawal,
+                                )
                         )
                     },
                     colors = NavigationBarItemDefaults.colors(
@@ -93,9 +107,10 @@ fun MaktabtiBottomBar(
                         unselectedIconColor = Color.Gray,
                         selectedTextColor = MaterialTheme.colorScheme.primary,
                         unselectedTextColor = Color.Gray,
-                        indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                        indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+                    ),
+
                     )
-                )
             }
         }
     }
