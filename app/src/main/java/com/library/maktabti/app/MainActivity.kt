@@ -2,48 +2,95 @@ package com.library.maktabti.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.library.core.ui.theme.Maktabti_clientTheme
 import com.library.maktabti.navigation.AppNavHost
+import com.library.maktabti.navigation.AppRoute
+import com.library.maktabti.navigation.MaktabtiBottomBar
+import com.library.maktabti.navigation.isBottomBarDestination
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private lateinit var navController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Handle the splash screen transition before calling super.onCreate()
         installSplashScreen()
-        
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            navController = rememberNavController()
+            val navController = rememberNavController()
+
             CompositionLocalProvider(
                 LocalLayoutDirection provides LayoutDirection.Rtl
             ) {
                 Maktabti_clientTheme(darkTheme = isSystemInDarkTheme(), dynamicColor = false) {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+                    val (isBottomBarDestination, currentRoute) = navBarHandelation(navController)
+
+                    Scaffold(
+                        modifier = Modifier.fillMaxSize(),
+                        bottomBar = {
+                            if (isBottomBarDestination) {
+                                MaktabtiBottomBar(
+                                    currentRoute = currentRoute,
+                                    onTabSelected = { item ->
+                                        navController.navigate(item.route) {
+                                            popUpTo(AppRoute.HomeRoute) {
+                                                inclusive = false
+                                            }
+                                            launchSingleTop = true
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    ) { innerPadding ->
                         AppNavHost(
                             navController = navController,
                             innerPadding = innerPadding
                         )
-
                     }
                 }
             }
-
         }
+    }
+
+    @Composable
+    private fun navBarHandelation(navController: NavHostController): Pair<Boolean, String?> {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
+        val isBottomBarDestination = currentDestination.isBottomBarDestination()
+        val isHome =
+            currentDestination?.route == AppRoute.HomeRoute::class.qualifiedName
+        val currentRoute = currentDestination?.route
+
+        BackHandler(
+            enabled = isBottomBarDestination && !isHome
+        ) {
+            navController.navigate(AppRoute.HomeRoute) {
+                popUpTo(AppRoute.HomeRoute) {
+                    inclusive = false
+                }
+                launchSingleTop = true
+            }
+        }
+        return Pair(isBottomBarDestination, currentRoute)
     }
 }
