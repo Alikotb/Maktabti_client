@@ -20,6 +20,9 @@ sealed class AppRoute {
     object FavoriteRoute : AppRoute()
 
     @Serializable
+    object SectionsRoute : AppRoute()
+
+    @Serializable
     object AboutRoute : AppRoute()
 
 }

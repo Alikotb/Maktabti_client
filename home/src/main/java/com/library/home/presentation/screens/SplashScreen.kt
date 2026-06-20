@@ -43,11 +43,13 @@ import androidx.compose.ui.unit.sp
 import com.library.core.ui.component.AppButton
 import com.library.core.ui.theme.Tajawal
 import com.library.home.R
+import com.library.home.presentation.contract.SplashContract
+import com.library.home.presentation.view_model.SplashViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    onStartShoppingClick: () -> Unit,
+    viewModel: SplashViewModel,
     modifier: Modifier = Modifier
 ) {
     var progress by remember { mutableFloatStateOf(0f) }
@@ -65,7 +67,7 @@ fun SplashScreen(
 
     LaunchedEffect(Unit) {
         while (progress < 1f) {
-            progress += 0.01f
+            progress += 0.03f
             delay(50)
         }
     }
@@ -80,7 +82,6 @@ fun SplashScreen(
     ) {
 
 
-        // Logo Box with animation and shadow
         Box(
             modifier = Modifier
                 .offset(y = offsetY.dp)
@@ -97,14 +98,13 @@ fun SplashScreen(
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "App Logo",
-                modifier = Modifier.size(128.dp),
+                modifier = Modifier.size(144.dp),
                 contentScale = ContentScale.Fit
             )
         }
 
         Spacer(modifier = Modifier.height(64.dp))
 
-        // Title
         Text(
             text = "مكتبة الرواق",
             fontSize = 36.sp,
@@ -140,10 +140,11 @@ fun SplashScreen(
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        // Start Shopping Button
         AppButton(
             text = "ابدأ التسوق",
-            onClick = onStartShoppingClick,
+            onClick = {
+                viewModel.onIntent(SplashContract.Intent.NavigateToNext)
+            },
             backgroundColor = MaterialTheme.colorScheme.primary,
             textSize = 20.sp,
             height = 60.dp,
