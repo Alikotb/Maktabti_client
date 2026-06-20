@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Base application theme -->
     <style name="Theme.Maktabti_client" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Splash Screen Theme -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, placeholder if needed -->
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <!-- Use the app icon for the splash screen -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
+        <!-- Theme to use after the splash screen is gone -->
+        <item name="postSplashScreenTheme">@style/Theme.Maktabti_client</item>
+    </style>
 </resources>

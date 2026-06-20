@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,7 +38,7 @@ fun AppButton(
             .padding(horizontal = horizontalPadding)
             .height(height),
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (backgroundColor == Color.Unspecified) androidx.compose.material3.MaterialTheme.colorScheme.primary else backgroundColor,
+            containerColor = if (backgroundColor == Color.Unspecified) MaterialTheme.colorScheme.primary else backgroundColor,
             contentColor = textColor
         ),
         shape = shape,
@@ -48,7 +49,7 @@ fun AppButton(
             fontSize = textSize,
             color = textColor,
             fontWeight = FontWeight.Bold,
-            fontFamily = Tajawal,
+            fontFamily = Tajawal
         )
     }
 }

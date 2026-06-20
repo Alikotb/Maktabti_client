@@ -36,7 +36,7 @@ private val LightColorScheme = lightColorScheme(
 fun Maktabti_clientTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false, // Set to false to prioritize your custom theme colors
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -53,9 +53,11 @@ fun Maktabti_clientTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            // Use the background color from the theme for the status bar
+            // 1. Status bar background matches the page background
             window.statusBarColor = colorScheme.background.toArgb()
-            // Make status bar icons always dark (black foreground) as requested
+            
+            // 2. Status bar foreground (icons) is ALWAYS black as requested
+            // isAppearanceLightStatusBars = true makes the icons dark (black)
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
         }
     }
