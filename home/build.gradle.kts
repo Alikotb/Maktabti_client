@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.library.home"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
