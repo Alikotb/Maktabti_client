@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.library.core.ui.component.SectionHeader
-import com.library.home.presentation.component.CategoriesSection
+import com.library.core.ui.component.CategoriesSection
 import com.library.home.presentation.component.FeaturedProductsSection
 import com.library.home.presentation.component.NewProductSection
 import com.library.home.presentation.component.OfferSection

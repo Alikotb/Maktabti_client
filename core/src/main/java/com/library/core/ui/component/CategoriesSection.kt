@@ -1,4 +1,4 @@
-package com.library.home.presentation.component
+package com.library.core.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,15 +26,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.library.core.R
 import com.library.core.ui.theme.Tajawal
-import com.library.home.R
 
 @Composable
 fun CategoriesSection(modifier: Modifier = Modifier) {
     LazyRow(
         modifier = modifier
-    ){
-        items(categories){
+    ) {
+        items(categories) {
             CategoriesCard(photo = it.icon, name = it.name)
         }
     }
@@ -65,9 +65,9 @@ fun CategoriesCard(modifier: Modifier = Modifier, photo: Int, name: String) {
                     MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f),
                     RoundedCornerShape(24.dp)
                 ),
-            contentAlignment =  Alignment.Center
+            contentAlignment = Alignment.Center
 
-            ) {
+        ) {
             Image(
                 painter = painterResource(id = photo),
                 contentDescription = null,
@@ -102,47 +102,47 @@ val categories = listOf(
     Category(
         id = "notebooks",
         name = "دفاتر ومذكرات",
-        icon = R.drawable.notebook ,
+        icon = R.drawable.notebook,
     ),
     Category(
         id = "pens",
         name = "أقلام فاخرة",
-        icon =  R.drawable.pencile,
+        icon = R.drawable.pencile,
     ),
     Category(
         id = "art",
         name = "أدوات الرسم",
-        icon =  R.drawable.notebook,
+        icon = R.drawable.notebook,
     ),
     Category(
         id = "notebooks",
         name = "دفاتر ومذكرات",
-        icon = R.drawable.notebook ,
+        icon = R.drawable.notebook,
     ),
     Category(
         id = "pens",
         name = "أقلام فاخرة",
-        icon =  R.drawable.pencile,
+        icon = R.drawable.pencile,
     ),
     Category(
         id = "art",
         name = "أدوات الرسم",
-        icon =  R.drawable.notebook,
+        icon = R.drawable.notebook,
     ),
     Category(
         id = "notebooks",
         name = "دفاتر ومذكرات",
-        icon = R.drawable.notebook ,
+        icon = R.drawable.notebook,
     ),
     Category(
         id = "pens",
         name = "أقلام فاخرة",
-        icon =  R.drawable.pencile,
+        icon = R.drawable.pencile,
     ),
     Category(
         id = "art",
         name = "أدوات الرسم",
-        icon =  R.drawable.notebook,
+        icon = R.drawable.notebook,
     ),
 
-)
+    )

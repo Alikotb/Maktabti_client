@@ -10,21 +10,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -32,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.library.core.R
 import com.library.core.ui.theme.Tajawal
 
 //
@@ -212,33 +209,25 @@ fun ProductsCard(
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
-
-                Box(
+                CircleIconButton(
+                    imageVector = if (product.isFavorite)
+                        Icons.Filled.Favorite
+                    else
+                        Icons.Outlined.FavoriteBorder,
+                    contentDescription = "Favorite",
+                    size = favoriteButtonSize,
+                    iconSizeRatio = 0.45f,
+                    iconTint = if (product.isFavorite)
+                        MaterialTheme.colorScheme.primary
+                    else
+                        MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f),
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .padding(8.dp)
-                        .size(favoriteButtonSize)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surface)
-                        .clickable {
-                            onFavoriteClick(product)
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-
-                    Icon(
-                        imageVector = if (product.isFavorite)
-                            Icons.Filled.Favorite
-                        else
-                            Icons.Outlined.FavoriteBorder,
-                        contentDescription = "Favorite",
-                        tint = if (product.isFavorite)
-                            MaterialTheme.colorScheme.primary
-                        else
-                            MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f),
-                        modifier = Modifier.size(favoriteButtonSize * 0.45f)
-                    )
-                }
+                        .padding(8.dp),
+                    onClick = {
+                        onFavoriteClick(product)
+                    }
+                )
 
                 if (product.isNew) {
 
@@ -320,3 +309,36 @@ enum class ProductCardSize {
     Medium,
     Large
 }
+
+
+val featuredProducts = listOf(
+    Product(
+        id = "1",
+        name = "حقيبة قماشية كلاسيكية",
+        price = 230.0,
+        image = R.drawable.p_bag,
+        isFavorite = false
+    ),
+    Product(
+        id = "2",
+        name = "قلم حبر خشبي نحاسي",
+        price = 145.0,
+        image = R.drawable.p_pen,
+        isNew = true,
+        isFavorite = true
+    ),
+    Product(
+        id = "3",
+        name = "دفتر ملاحظات جلدي",
+        price = 85.0,
+        image = R.drawable.p_books,
+        isFavorite = false
+    ),
+    Product(
+        id = "1",
+        name = "حقيبة قماشية كلاسيكية",
+        price = 230.0,
+        image = R.drawable.p_bag,
+        isFavorite = false
+    ),
+)
