@@ -47,7 +47,7 @@ fun SectionsScreen(
         items(featuredProducts) { product ->
             ProductsCard(
                 product = product,
-                size = ProductCardSize.Medium,
+                size = ProductCardSize.Small,
                 modifier = Modifier.width(190.dp),
                 onProductClick = {
 
