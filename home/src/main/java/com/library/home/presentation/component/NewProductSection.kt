@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.library.core.ui.component.Product
 import com.library.core.ui.component.ProductCardSize
 import com.library.core.ui.component.ProductsCard
+import com.library.core.ui.component.featuredProducts
 
 @Composable
 fun NewProductSection(

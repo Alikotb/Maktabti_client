@@ -46,7 +46,7 @@ fun AppNavHost(
         composable<AppRoute.SectionsRoute> {
 //            val viewModel = hiltViewModel<SplashViewModel>()
 //            SplashNavHandler(navController = navController, viewModel = viewModel)
-            SectionsScreen(modifier = modifier.padding(innerPadding))
+            SectionsScreen(modifier = modifier.padding(top = innerPadding.calculateTopPadding()))
         }
         composable<AppRoute.FavoriteRoute> {
 //            val viewModel = hiltViewModel<SplashViewModel>()

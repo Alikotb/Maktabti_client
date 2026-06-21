@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.library.core.ui.component.Product
 import com.library.core.ui.component.ProductCardSize
 import com.library.core.ui.component.ProductsCard
-import com.library.home.R
+import com.library.core.ui.component.featuredProducts
 
 @Composable
 fun FeaturedProductsSection(
@@ -38,10 +38,10 @@ fun FeaturedProductsSection(
                 product = product,
                 size = ProductCardSize.Medium,
                 modifier = Modifier.width(190.dp),
-                onProductClick ={
+                onProductClick = {
                     onProductClick(product)
-                } ,
-                onFavoriteClick ={
+                },
+                onFavoriteClick = {
                     onFavoriteClick(product)
                 }
             )
@@ -50,34 +50,3 @@ fun FeaturedProductsSection(
 }
 
 
-val featuredProducts = listOf(
-    Product(
-        id = "1",
-        name = "حقيبة قماشية كلاسيكية",
-        price = 230.0,
-        image = R.drawable.p_bag,
-        isFavorite = false
-    ),
-    Product(
-        id = "2",
-        name = "قلم حبر خشبي نحاسي",
-        price = 145.0,
-        image = R.drawable.p_pen,
-        isNew = true,
-        isFavorite = true
-    ),
-    Product(
-        id = "3",
-        name = "دفتر ملاحظات جلدي",
-        price = 85.0,
-        image = R.drawable.p_books,
-        isFavorite = false
-    ),
-    Product(
-        id = "1",
-        name = "حقيبة قماشية كلاسيكية",
-        price = 230.0,
-        image = R.drawable.p_bag,
-        isFavorite = false
-    ),
-)
