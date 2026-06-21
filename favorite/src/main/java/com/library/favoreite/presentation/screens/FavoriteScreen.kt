@@ -1,34 +1,65 @@
 package com.library.favoreite.presentation.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
-import com.library.core.ui.theme.Tajawal
+import androidx.compose.ui.unit.dp
+import com.library.core.ui.component.ProductCardSize
+import com.library.core.ui.component.ProductsCard
+import com.library.core.ui.component.featuredProducts
+import com.library.favoreite.presentation.component.FavoriteHeader
 
 @Composable
 fun FavoriteScreen(
     modifier: Modifier = Modifier
 ) {
-    Box(
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
         modifier = modifier
-            .background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "Favorite Screen",
-            fontSize = 36.sp,
-            fontFamily = Tajawal,
-            fontWeight = FontWeight.ExtraBold,
-            color = MaterialTheme.colorScheme.secondary,
-            textAlign = TextAlign.Center
-        )
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 10.dp),
 
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            Spacer(modifier = Modifier.height(24.dp))
+        }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            FavoriteHeader(modifier = Modifier.padding(start = 10.dp), numberOfProduct = 3)
+        }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            Spacer(modifier = Modifier.height(2.dp))
+        }
+        items(featuredProducts) { product ->
+            ProductsCard(
+                product = product,
+                size = ProductCardSize.Medium,
+                modifier = Modifier.width(190.dp),
+                onProductClick = {
+
+                },
+                onFavoriteClick = {
+
+                }
+            )
+
+        }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            Spacer(modifier = Modifier.height(160.dp))
+        }
+//        item(span = { GridItemSpan(maxLineSpan) }) {
+//            CategoriesSection()
+//        }
     }
 }
