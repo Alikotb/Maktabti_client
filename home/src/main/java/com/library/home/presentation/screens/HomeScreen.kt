@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.library.core.ui.component.SectionHeader
 import com.library.home.presentation.component.CategoriesSection
 import com.library.home.presentation.component.FeaturedProductsSection
+import com.library.home.presentation.component.NewProductSection
 import com.library.home.presentation.component.OfferSection
 import com.library.home.presentation.component.SearchSection
 
@@ -50,9 +51,10 @@ fun HomeScreen(
                 Spacer(Modifier.height(32.dp))
                 SectionHeader(sectionName = "وصل حديثاً")
                 Spacer(Modifier.height(12.dp))
+                NewProductSection()
             }
             item {
-                Spacer(Modifier.height(226.dp))
+                Spacer(Modifier.height(200.dp))
             }
         }
     }
