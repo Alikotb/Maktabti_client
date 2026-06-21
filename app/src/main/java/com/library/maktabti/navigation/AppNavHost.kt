@@ -56,7 +56,7 @@ fun AppNavHost(
         composable<AppRoute.AboutRoute> {
 //            val viewModel = hiltViewModel<SplashViewModel>()
 //            SplashNavHandler(navController = navController, viewModel = viewModel)
-            AboutScreen(modifier = modifier.padding(innerPadding))
+            AboutScreen(modifier = modifier.padding(top = innerPadding.calculateTopPadding()))
         }
         composable<AppRoute.SearchRoute> {
 //            val viewModel = hiltViewModel<SplashViewModel>()

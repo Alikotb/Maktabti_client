@@ -40,9 +40,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.library.core.R
 import com.library.core.ui.component.AppButton
 import com.library.core.ui.theme.Tajawal
-import com.library.home.R
 import com.library.home.presentation.contract.SplashContract
 import com.library.home.presentation.view_model.SplashViewModel
 import kotlinx.coroutines.delay
