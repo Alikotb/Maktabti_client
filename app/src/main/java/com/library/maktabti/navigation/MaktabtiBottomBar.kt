@@ -37,7 +37,7 @@ fun MaktabtiBottomBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 56.dp),
+            .padding(bottom = 48.dp),
         contentAlignment = Alignment.Center
     ) {
         Row(
