@@ -29,7 +29,7 @@ fun AppNavHost(
 //    val isOnline by mainViewModel.isOnline.observeAsState(initial = true)
     NavHost(
         navController = navController,
-        startDestination = AppRoute.SplashRoute
+        startDestination = AppRoute.HomeRoute
     ) {
 
         composable<AppRoute.SplashRoute> {
