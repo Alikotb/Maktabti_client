@@ -13,7 +13,9 @@ import com.library.details.presentation.screens.DetailsScreen
 import com.library.favoreite.presentation.screens.FavoriteScreen
 import com.library.home.presentation.screens.HomeScreen
 import com.library.home.presentation.screens.SplashScreen
+import com.library.home.presentation.view_model.HomeViewModel
 import com.library.home.presentation.view_model.SplashViewModel
+import com.library.maktabti.navigation.home.HomeNavHandler
 import com.library.maktabti.navigation.home.SplashNavHandler
 import com.library.search.presentation.screens.SearchScreen
 import com.library.sections.presentation.screens.SectionsScreen
@@ -39,9 +41,9 @@ fun AppNavHost(
         }
 
         composable<AppRoute.HomeRoute> {
-//            val viewModel = hiltViewModel<SplashViewModel>()
-//            SplashNavHandler(navController = navController, viewModel = viewModel)
-            HomeScreen(modifier = modifier.padding(top = innerPadding.calculateTopPadding()))
+            val viewModel = hiltViewModel<HomeViewModel>()
+            HomeNavHandler(navController = navController, viewModel = viewModel)
+            HomeScreen(modifier = modifier.padding(top = innerPadding.calculateTopPadding()), viewModel = viewModel)
         }
         composable<AppRoute.SectionsRoute> {
 //            val viewModel = hiltViewModel<SplashViewModel>()

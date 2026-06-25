@@ -17,10 +17,12 @@ import com.library.home.presentation.component.FeaturedProductsSection
 import com.library.home.presentation.component.NewProductSection
 import com.library.home.presentation.component.OfferSection
 import com.library.home.presentation.component.SearchSection
+import com.library.home.presentation.view_model.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel
 ) {
     Box(
         modifier = modifier
@@ -30,7 +32,7 @@ fun HomeScreen(
     ) {
         LazyColumn {
             item {
-                SearchSection()
+                SearchSection(viewModel=viewModel)
             }
             item {
                 OfferSection()

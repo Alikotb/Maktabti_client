@@ -27,9 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.library.core.ui.component.MySearchBar
 import com.library.core.ui.theme.Tajawal
+import com.library.home.presentation.contract.HomeContract
+import com.library.home.presentation.view_model.HomeViewModel
 
 @Composable
-fun SearchSection(modifier: Modifier = Modifier) {
+fun SearchSection(modifier: Modifier = Modifier,viewModel: HomeViewModel) {
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -82,6 +84,9 @@ fun SearchSection(modifier: Modifier = Modifier) {
             onQueryChange = { },
             readOnly = true,
             onClick = {
+                viewModel.onIntent(
+                    HomeContract.Intent.NavigateToSearch
+                )
             }
         )
 

@@ -335,9 +335,32 @@ val featuredProducts = listOf(
         isFavorite = false
     ),
     Product(
-        id = "1",
+        id = "4",
         name = "حقيبة قماشية كلاسيكية",
-        price = 230.0,
+        price = 155.0,
+        image = R.drawable.p_bag,
+        isFavorite = false
+    ),
+
+    Product(
+        id = "12",
+        name = "قلم حبر خشبي نحاسي",
+        price = 145.0,
+        image = R.drawable.p_pen,
+        isNew = true,
+        isFavorite = true
+    ),
+    Product(
+        id = "13",
+        name = "دفتر ملاحظات جلدي",
+        price = 200.0,
+        image = R.drawable.p_books,
+        isFavorite = false
+    ),
+    Product(
+        id = "14",
+        name = "حقيبة قماشية كلاسيكية",
+        price = 100.0,
         image = R.drawable.p_bag,
         isFavorite = false
     ),
