@@ -14,7 +14,7 @@ sealed class AppRoute {
     object SearchRoute : AppRoute()
 
     @Serializable
-    data class DetailsRoute(val movieId: Int) : AppRoute()
+    data class DetailsRoute(val productId: String) : AppRoute()
 
     @Serializable
     object FavoriteRoute : AppRoute()

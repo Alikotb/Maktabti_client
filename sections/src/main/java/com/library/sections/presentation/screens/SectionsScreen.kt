@@ -19,10 +19,13 @@ import com.library.core.ui.component.ProductCardSize
 import com.library.core.ui.component.ProductsCard
 import com.library.core.ui.component.featuredProducts
 import com.library.sections.presentation.component.CategoryHeader
+import com.library.sections.presentation.contract.CategoriesContract
+import com.library.sections.presentation.view_model.CategoriesViewModel
 
 @Composable
 fun SectionsScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: CategoriesViewModel
 ) {
 
     LazyVerticalGrid(
@@ -35,7 +38,13 @@ fun SectionsScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item(span = { GridItemSpan(maxLineSpan) }) {
-            CategoryHeader()
+            CategoryHeader(
+                modifier = Modifier.padding(start = 10.dp),
+                onBackClick = {
+                    viewModel.onIntent(CategoriesContract.Intent.NavigateBack)
+                },
+                onClick = { viewModel.onIntent(CategoriesContract.Intent.NavigateToSearch) }
+            )
         }
 
         item(span = { GridItemSpan(maxLineSpan) }) {
@@ -50,7 +59,7 @@ fun SectionsScreen(
                 size = ProductCardSize.Small,
                 modifier = Modifier.width(190.dp),
                 onProductClick = {
-
+                    viewModel.onIntent(CategoriesContract.Intent.NavigateToDetails(product.id))
                 },
                 onFavoriteClick = {
 

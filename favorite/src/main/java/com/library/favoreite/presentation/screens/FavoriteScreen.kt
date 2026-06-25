@@ -14,14 +14,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.library.core.ui.component.ProductCardSize
 import com.library.core.ui.component.ProductsCard
 import com.library.core.ui.component.featuredProducts
 import com.library.favoreite.presentation.component.FavoriteHeader
+import com.library.favoreite.presentation.contract.FavoriteContract
+import com.library.favoreite.presentation.view_model.FavoriteViewModel
 
 @Composable
 fun FavoriteScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: FavoriteViewModel = hiltViewModel()
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -47,9 +51,10 @@ fun FavoriteScreen(
                 size = ProductCardSize.Medium,
                 modifier = Modifier.width(190.dp),
                 onProductClick = {
-
+                    viewModel.onIntent(FavoriteContract.Intent.NavigateToDetails(product.id))
                 },
                 onFavoriteClick = {
+                    viewModel.onIntent(FavoriteContract.Intent.NavigateToDetails(product.id))
 
                 }
             )
@@ -58,8 +63,5 @@ fun FavoriteScreen(
         item(span = { GridItemSpan(maxLineSpan) }) {
             Spacer(modifier = Modifier.height(160.dp))
         }
-//        item(span = { GridItemSpan(maxLineSpan) }) {
-//            CategoriesSection()
-//        }
     }
 }

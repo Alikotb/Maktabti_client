@@ -20,7 +20,7 @@ import com.library.core.ui.component.CircleIconButton
 import com.library.core.ui.theme.Tajawal
 
 @Composable
-fun CategoryHeader(modifier: Modifier = Modifier) {
+fun CategoryHeader(modifier: Modifier = Modifier,onBackClick:()->Unit,onClick:()->Unit) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -30,9 +30,7 @@ fun CategoryHeader(modifier: Modifier = Modifier) {
             imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
             contentDescription = "Favorite",
             modifier = Modifier.padding(8.dp),
-            onClick = {
-                // Search Action
-            }
+            onClick = onBackClick
         )
         Text(
             "الأقسام",
@@ -48,9 +46,7 @@ fun CategoryHeader(modifier: Modifier = Modifier) {
             imageVector = Icons.Outlined.Search,
             contentDescription = "Search",
             modifier = Modifier.padding(8.dp),
-            onClick = {
-                // Search Action
-            }
+            onClick = onClick
         )
     }
 }

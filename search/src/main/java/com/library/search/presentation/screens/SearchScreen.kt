@@ -45,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.library.core.ui.component.MySearchBar
@@ -55,8 +56,11 @@ import com.library.core.ui.theme.Tajawal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -97,8 +101,13 @@ sealed interface SearchIntent {
     data class UpdateQuery(val query: String) : SearchIntent
     data class SelectFilter(val filter: SearchFilter?) : SearchIntent
     data class ToggleFavorite(val productId: String) : SearchIntent
+    data class NavigateToDetails(val productId: String) : SearchIntent
     object ClearSearch : SearchIntent
     object Retry : SearchIntent
+}
+
+sealed interface SearchEffect {
+    data class NavigateToDetails(val productId: String) : SearchEffect
 }
 
 /**
@@ -111,6 +120,9 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState: StateFlow<SearchUiState> = _uiState.asStateFlow()
+
+    private val _effect = MutableSharedFlow<SearchEffect>()
+    val effect: SharedFlow<SearchEffect> = _effect.asSharedFlow()
 
     private var searchJob: Job? = null
     private var mockProductList = featuredProducts.toMutableList()
@@ -142,6 +154,12 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                     if (it.id == intent.productId) it.copy(isFavorite = !it.isFavorite) else it
                 }.toMutableList()
                 executeSearch(_uiState.value.searchQuery, _uiState.value.selectedFilter)
+            }
+
+            is SearchIntent.NavigateToDetails -> {
+                viewModelScope.launch {
+                    _effect.emit(SearchEffect.NavigateToDetails(intent.productId))
+                }
             }
 
             is SearchIntent.ClearSearch -> {
@@ -197,7 +215,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    viewModel: SearchViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: SearchViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -277,7 +295,7 @@ fun SearchContent(
                         SearchResultsGrid(
                             products = uiState.products,
                             columns = columnCount,
-                            onProductClick = { /* Navigate to Product details */ },
+                            onProductClick = { onIntent(SearchIntent.NavigateToDetails(it.id)) },
                             onFavoriteClick = { onIntent(SearchIntent.ToggleFavorite(it.id)) },
                             modifier = Modifier.fillMaxSize()
                         )

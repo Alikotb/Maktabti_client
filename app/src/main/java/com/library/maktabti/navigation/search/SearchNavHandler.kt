@@ -1,24 +1,21 @@
-package com.library.maktabti.navigation.home
+package com.library.maktabti.navigation.search
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
-import com.library.home.presentation.contract.HomeContract
-import com.library.home.presentation.view_model.HomeViewModel
 import com.library.maktabti.navigation.AppRoute
+import com.library.search.presentation.screens.SearchEffect
+import com.library.search.presentation.screens.SearchViewModel
 
 @Composable
-fun HomeNavHandler(
+fun SearchNavHandler(
     navController: NavHostController,
-    viewModel: HomeViewModel,
+    viewModel: SearchViewModel,
 ) {
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
-                HomeContract.Effect.NavigateToSearch -> {
-                    navController.navigate(AppRoute.SearchRoute)
-                }
-                is HomeContract.Effect.NavigateToDetails -> {
+                is SearchEffect.NavigateToDetails -> {
                     navController.navigate(AppRoute.DetailsRoute(effect.productId))
                 }
             }

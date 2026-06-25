@@ -1,14 +1,11 @@
-package com.library.home.presentation.contract
+package com.library.favoreite.presentation.contract
 
-
-interface HomeContract {
+interface FavoriteContract {
     sealed class Intent {
-        object NavigateToSearch : Intent()
         data class NavigateToDetails(val productId: String) : Intent()
     }
 
     sealed interface Effect {
-        object NavigateToSearch : Effect
         data class NavigateToDetails(val productId: String) : Effect
     }
 }

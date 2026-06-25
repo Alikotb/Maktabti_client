@@ -20,7 +20,9 @@ class HomeViewModel @Inject constructor() : ViewModel() {
             HomeContract.Intent.NavigateToSearch -> {
                 emitEffect(HomeContract.Effect.NavigateToSearch)
             }
-
+            is HomeContract.Intent.NavigateToDetails -> {
+                emitEffect(HomeContract.Effect.NavigateToDetails(intent.productId))
+            }
         }
     }
 

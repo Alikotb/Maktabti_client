@@ -17,6 +17,7 @@ import com.library.home.presentation.component.FeaturedProductsSection
 import com.library.home.presentation.component.NewProductSection
 import com.library.home.presentation.component.OfferSection
 import com.library.home.presentation.component.SearchSection
+import com.library.home.presentation.contract.HomeContract
 import com.library.home.presentation.view_model.HomeViewModel
 
 @Composable
@@ -47,13 +48,21 @@ fun HomeScreen(
                 Spacer(Modifier.height(26.dp))
                 SectionHeader(sectionName = "المنتجات المميزة")
                 Spacer(Modifier.height(12.dp))
-                FeaturedProductsSection()
+                FeaturedProductsSection(
+                    onProductClick = { product ->
+                        viewModel.onIntent(HomeContract.Intent.NavigateToDetails(product.id))
+                    }
+                )
             }
             item {
                 Spacer(Modifier.height(32.dp))
                 SectionHeader(sectionName = "وصل حديثاً")
                 Spacer(Modifier.height(12.dp))
-                NewProductSection()
+                NewProductSection(
+                    onProductClick = { product ->
+                        viewModel.onIntent(HomeContract.Intent.NavigateToDetails(product.id))
+                    }
+                )
             }
             item {
                 Spacer(Modifier.height(200.dp))
