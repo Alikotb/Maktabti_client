@@ -85,7 +85,7 @@ fun AppNavHost(
             DetailsNavHandler(navController = navController, viewModel = viewModel)
             DetailsScreen(
                 productId = detailsRoute.productId,
-                modifier = modifier.padding(innerPadding),
+                modifier = modifier.padding(bottom =innerPadding.calculateBottomPadding()),
                 viewModel = viewModel
             )
         }

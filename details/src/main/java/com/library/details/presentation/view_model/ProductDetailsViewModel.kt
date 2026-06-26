@@ -65,7 +65,7 @@ class ProductDetailsViewModel @Inject constructor() : ViewModel() {
                 isNew = true,
                 isSpecial = true,
                 isFavorite = false,
-                availability = ProductAvailability.AVAILABLE,
+                availability = ProductAvailability.OUT_OF_STOCK,
                 offer = "خصم 15% لفترة محدودة"
             )
 
