@@ -1,11 +1,33 @@
 package com.library.details.presentation.contract
 
-data class ProductDetailsState(
-    val isLoading: Boolean = false,
-    val product: ProductDetails? = null,
-    val error: String? = null,
-    val isEmpty: Boolean = false
-)
+enum class ProductAvailability {
+    AVAILABLE,
+    OUT_OF_STOCK,
+    UNKNOWN
+}
+
+interface ProductDetailsContract {
+    data class ProductDetailsState(
+        val isLoading: Boolean = false,
+        val product: ProductDetails? = null,
+        val error: String? = null,
+        val isEmpty: Boolean = false
+    )
+
+
+
+    sealed interface Intent {
+        data class LoadProduct(val productId: String) : Intent
+        object ToggleFavorite : Intent
+        object ShareProduct : Intent
+        object Retry : Intent
+        object BackClicked : Intent
+    }
+
+    sealed interface Effect {
+        object NavigateBack : Effect
+    }
+}
 
 data class ProductDetails(
     val id: String,
@@ -21,17 +43,3 @@ data class ProductDetails(
     val availability: ProductAvailability = ProductAvailability.UNKNOWN,
     val offer: String? = null
 )
-
-enum class ProductAvailability {
-    AVAILABLE,
-    OUT_OF_STOCK,
-    UNKNOWN
-}
-
-sealed interface ProductDetailsIntent {
-    data class LoadProduct(val productId: String) : ProductDetailsIntent
-    object ToggleFavorite : ProductDetailsIntent
-    object ShareProduct : ProductDetailsIntent
-    object Retry : ProductDetailsIntent
-    object BackClicked : ProductDetailsIntent
-}

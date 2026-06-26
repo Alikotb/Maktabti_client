@@ -230,71 +230,7 @@ fun ProductAvailabilityCard(
     }
 }
 
-@Composable
-fun ProductPriceCard(
-    price: Double,
-    currency: String,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
-        shape = RoundedCornerShape(24.dp)
-    ) {
-        Row(
-            modifier = Modifier.padding(24.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column {
-                Text(
-                    text = "السعر الإجمالي",
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        fontFamily = Tajawal,
-                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f)
-                    )
-                )
-                Row(verticalAlignment = Alignment.Bottom) {
-                    Text(
-                        text = price.toInt().toString(),
-                        style = MaterialTheme.typography.headlineLarge.copy(
-                            fontFamily = Tajawal,
-                            fontWeight = FontWeight.ExtraBold,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = currency,
-                        modifier = Modifier.padding(bottom = 6.dp),
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontFamily = Tajawal,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
-                    )
-                }
-            }
 
-            Button(
-                onClick = { },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.onPrimary,
-                    contentColor = MaterialTheme.colorScheme.primary
-                ),
-                shape = RoundedCornerShape(16.dp),
-                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
-            ) {
-                Text(
-                    text = "أضف للسلة",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontFamily = Tajawal,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun ProductOfferCard(

@@ -1,4 +1,4 @@
-package com.library.maktabti.navigation.details
+package com.library.maktabti.navigation.favorite
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

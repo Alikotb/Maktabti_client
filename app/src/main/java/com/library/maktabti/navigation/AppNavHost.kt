@@ -1,5 +1,6 @@
 package com.library.maktabti.navigation
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.library.about.presentation.screens.AboutScreen
 import com.library.details.presentation.screens.DetailsScreen
+import com.library.details.presentation.view_model.ProductDetailsViewModel
 import com.library.favoreite.presentation.screens.FavoriteScreen
 import com.library.favoreite.presentation.view_model.FavoriteViewModel
 import com.library.home.presentation.screens.HomeScreen
@@ -18,7 +20,8 @@ import com.library.home.presentation.screens.SplashScreen
 import com.library.home.presentation.view_model.HomeViewModel
 import com.library.home.presentation.view_model.SplashViewModel
 import com.library.maktabti.navigation.categories.CategoriesNavHandler
-import com.library.maktabti.navigation.details.FavoriteNavHandler
+import com.library.maktabti.navigation.details.DetailsNavHandler
+import com.library.maktabti.navigation.favorite.FavoriteNavHandler
 import com.library.maktabti.navigation.home.HomeNavHandler
 import com.library.maktabti.navigation.home.SplashNavHandler
 import com.library.maktabti.navigation.search.SearchNavHandler
@@ -28,6 +31,7 @@ import com.library.sections.presentation.screens.SectionsScreen
 import com.library.sections.presentation.view_model.CategoriesViewModel
 
 
+@SuppressLint("WrongStartDestinationType")
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
@@ -77,10 +81,12 @@ fun AppNavHost(
         }
         composable<AppRoute.DetailsRoute> { backStackEntry ->
             val detailsRoute: AppRoute.DetailsRoute = backStackEntry.toRoute()
+            val viewModel = hiltViewModel<ProductDetailsViewModel>()
+            DetailsNavHandler(navController = navController, viewModel = viewModel)
             DetailsScreen(
                 productId = detailsRoute.productId,
-                onBackClick = { navController.popBackStack() },
-                modifier = modifier.padding(innerPadding)
+                modifier = modifier.padding(innerPadding),
+                viewModel = viewModel
             )
         }
 

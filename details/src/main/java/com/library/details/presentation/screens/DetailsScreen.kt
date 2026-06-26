@@ -48,14 +48,13 @@ import com.library.details.presentation.component.ProductOfferCard
 import com.library.details.presentation.component.ProductPriceCard
 import com.library.details.presentation.component.ProductStatusBadges
 import com.library.details.presentation.contract.ProductDetails
-import com.library.details.presentation.contract.ProductDetailsIntent
+import com.library.details.presentation.contract.ProductDetailsContract
 import com.library.details.presentation.view_model.ProductDetailsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsScreen(
-    productId: String,
-    onBackClick: () -> Unit,
+    productId: String = "1",
     viewModel: ProductDetailsViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -63,7 +62,7 @@ fun DetailsScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     LaunchedEffect(productId) {
-        viewModel.onIntent(ProductDetailsIntent.LoadProduct(productId))
+        viewModel.onIntent(ProductDetailsContract.Intent.LoadProduct(productId))
     }
 
     Scaffold(
@@ -71,9 +70,11 @@ fun DetailsScreen(
         topBar = {
             DetailsTopAppBar(
                 isFavorite = state.product?.isFavorite ?: false,
-                onBackClick = onBackClick,
-                onFavoriteClick = { viewModel.onIntent(ProductDetailsIntent.ToggleFavorite) },
-                onShareClick = { viewModel.onIntent(ProductDetailsIntent.ShareProduct) },
+                onBackClick = {
+                    viewModel.onIntent(ProductDetailsContract.Intent.BackClicked)
+                },
+                onFavoriteClick = { viewModel.onIntent(ProductDetailsContract.Intent.ToggleFavorite) },
+                onShareClick = { viewModel.onIntent(ProductDetailsContract.Intent.ShareProduct) },
                 scrollBehavior = scrollBehavior
             )
         },
@@ -86,7 +87,12 @@ fun DetailsScreen(
         ) {
             when {
                 state.isLoading -> ProductLoadingState()
-                state.error != null -> ProductErrorState(onRetry = { viewModel.onIntent(ProductDetailsIntent.Retry) })
+                state.error != null -> ProductErrorState(onRetry = {
+                    viewModel.onIntent(
+                        ProductDetailsContract.Intent.Retry
+                    )
+                })
+
                 state.isEmpty -> ProductEmptyState()
                 state.product != null -> {
                     ProductDetailsAdaptiveContent(
@@ -133,7 +139,12 @@ private fun DetailsTopAppBar(
                 )
             }
         },
-        scrollBehavior = scrollBehavior
+        scrollBehavior = scrollBehavior,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background
+        ),
+        windowInsets = WindowInsets.systemBars
     )
 }
 
@@ -145,9 +156,8 @@ private fun ProductDetailsAdaptiveContent(
 ) {
     BoxWithConstraints(modifier = modifier) {
         val isTablet = maxWidth > 600.dp
-        
+
         if (isTablet) {
-            // Two-pane layout for tablets
             Row(
                 modifier = Modifier
                     .fillMaxSize()
@@ -185,21 +195,18 @@ private fun ProductDetailsAdaptiveContent(
 @Composable
 private fun ColumnScope.ProductMainInfo(product: ProductDetails) {
     ProductStatusBadges(isNew = product.isNew, isSpecial = product.isSpecial)
-    
+
     ProductInfoSection(
         name = product.name,
         description = product.description,
         category = product.category
     )
-    
+
     ProductAvailabilityCard(availability = product.availability)
-    
+
     ProductOfferCard(offer = product.offer)
-    
+
     Spacer(modifier = Modifier.weight(1f))
-    
-    ProductPriceCard(
-        price = product.price,
-        currency = product.currency
-    )
+
+
 }

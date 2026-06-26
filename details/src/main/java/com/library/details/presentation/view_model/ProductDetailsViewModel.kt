@@ -2,44 +2,58 @@ package com.library.details.presentation.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.library.core.R
 import com.library.details.presentation.contract.ProductAvailability
 import com.library.details.presentation.contract.ProductDetails
-import com.library.details.presentation.contract.ProductDetailsIntent
-import com.library.details.presentation.contract.ProductDetailsState
+import com.library.details.presentation.contract.ProductDetailsContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.library.core.R
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor() : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ProductDetailsState())
+    private val _uiState = MutableStateFlow(ProductDetailsContract.ProductDetailsState())
     val uiState = _uiState.asStateFlow()
 
-    fun onIntent(intent: ProductDetailsIntent) {
+    private val _effect = MutableSharedFlow<ProductDetailsContract.Effect>()
+    val effect = _effect.asSharedFlow()
+
+
+    private fun emitEffect(effect: ProductDetailsContract.Effect) {
+        viewModelScope.launch {
+            _effect.emit(effect)
+        }
+    }
+
+    fun onIntent(intent: ProductDetailsContract.Intent) {
         when (intent) {
-            is ProductDetailsIntent.LoadProduct -> loadProduct(intent.productId)
-            ProductDetailsIntent.ToggleFavorite -> toggleFavorite()
-            ProductDetailsIntent.ShareProduct -> shareProduct()
-            ProductDetailsIntent.Retry -> {
-                 _uiState.value.product?.id?.let { loadProduct(it) }
+            is ProductDetailsContract.Intent.LoadProduct -> loadProduct(intent.productId)
+            ProductDetailsContract.Intent.ToggleFavorite -> toggleFavorite()
+            ProductDetailsContract.Intent.ShareProduct -> shareProduct()
+            ProductDetailsContract.Intent.Retry -> {
+                _uiState.value.product?.id?.let { loadProduct(it) }
             }
-            ProductDetailsIntent.BackClicked -> { /* Handled by UI / Navigation */ }
+
+            ProductDetailsContract.Intent.BackClicked -> {
+                emitEffect(ProductDetailsContract.Effect.NavigateBack)
+            }
         }
     }
 
     private fun loadProduct(productId: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null, isEmpty = false) }
-            
+
             // Simulating API call
-            delay(1500)
-            
+            delay(500)
+
             // Mock Data
             val mockProduct = ProductDetails(
                 id = productId,
@@ -55,7 +69,7 @@ class ProductDetailsViewModel @Inject constructor() : ViewModel() {
                 offer = "خصم 15% لفترة محدودة"
             )
 
-            _uiState.update { 
+            _uiState.update {
                 it.copy(
                     isLoading = false,
                     product = mockProduct,
